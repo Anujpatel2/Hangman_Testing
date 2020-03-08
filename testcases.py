@@ -10,6 +10,10 @@ class TestLoadWordsFalse(TestCase):
         actual = 'b'
         self.assertNotEqual(expected, actual, "The does not exists")
 
-class TestChooseWord(TestCase):
+class TestChooseWordChosen(TestCase):
     def test_chooseWord(self):
         self.assertTrue('subscriptions == subscriptions' ,"Word is chosen")
+
+class TestChooseWordNotChosen(TestCase):
+    def test_chooseWord(self):
+        self.assertTrue(' ' ,"Word is not chosen")

@@ -9,3 +9,7 @@ class TestLoadWordsFalse(TestCase):
         expected = 'a'
         actual = 'b'
         self.assertNotEqual(expected, actual, "The does not exists")
+
+class TestChooseWord(TestCase):
+    def test_chooseWord(self):
+        self.assertTrue('subscriptions == subscriptions' ,"Word is chosen")

@@ -1,14 +1,13 @@
 from unittest import TestCase
 
+import hangman
+
 
 class Test(TestCase):
     def test_load_words(self):
-        def test_loadWords(self):
-            expected = 'a'
-            actual = 'a'
-            self.assertEqual(expected, actual, "The word exists")
+        s= hangman.loadWords()
+        self.assertTrue(len(s)>0)
 
-class TestLoadWordsFalse(TestCase):
     def test_loadWords(self):
         expected = 'a'
         actual = 'b'

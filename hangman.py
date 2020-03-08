@@ -18,6 +18,7 @@ def loadWords():
     # wordlist: list of strings
     wordlist = line.split()
     print("  ", len(wordlist), "words loaded.")
+    inFile.close()
     return wordlist
 
 def chooseWord(wordlist):

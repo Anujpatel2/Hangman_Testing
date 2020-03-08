@@ -1,3 +1,6 @@
+from unittest import TestCase
+import Hangman
+
 class TestLoadWordsTrue(TestCase):
     def test_loadWords(self):
         expected = 'a'
@@ -12,8 +15,16 @@ class TestLoadWordsFalse(TestCase):
 
 class TestChooseWordChosen(TestCase):
     def test_chooseWord(self):
-        self.assertTrue('subscriptions == subscriptions' ,"Word is chosen")
+        actual = Hangman.chooseWord("a")
+        expected = True
+        self.assertTrue(actual, "Word is chosen")
 
 class TestChooseWordNotChosen(TestCase):
     def test_chooseWord(self):
-        self.assertTrue(' ' ,"Word is not chosen")
+        expected = False
+        actual = Hangman.chooseWord("a")
+
+        self.assertTrue(' ',"Word is not chosen")
+
+
+

@@ -3,6 +3,8 @@ import random
 
 WORDLIST_FILENAME = "words.txt"
 
+
+
 def loadWords():
     """
     Returns a list of valid words. Words are strings of lowercase letters.
@@ -81,7 +83,7 @@ def getAvailableLetters(lettersGuessed):
         ans.remove(i)
     return ''.join(ans)
 
-def hangman(secretWord):
+def hangman(secretWord, winCount):
     '''
     secretWord: string, the secret word to guess.
     Starts up an interactive game of Hangman.
@@ -97,6 +99,7 @@ def hangman(secretWord):
     '''
     print("Welcome to the game, Hangman!")
     print("I am thinking of a word that is",len(secretWord),"letters long.")
+    winCount = 0
     
     global lettersGuessed
     mistakeMade=0
@@ -107,10 +110,20 @@ def hangman(secretWord):
         if isWordGuessed(secretWord, lettersGuessed):
             print("-------------")
             print("Congratulations, you won!")
-            break
+            anotherGame=input("Do you want to play another game? Press Y for yes and N for No: ")
+
+            if(anotherGame=="Y" or anotherGame=="y"):
+                winCount=winCount+1
+                secretWord = chooseWord(wordlist).lower()
+                hangman(secretWord,winCount)
+            else:
+                break
+
+
             
         else:
             print("-------------")
+            print("Win Count: "+ str(winCount))
             print("You have",8-mistakeMade,"guesses left.")
             print("Available letters:",getAvailableLetters(lettersGuessed))
             guess=str(input("Please guess a letter: ")).lower()
@@ -130,11 +143,20 @@ def hangman(secretWord):
         if 8 - mistakeMade == 0:
             print("-------------")
             print("Sorry, you ran out of guesses. The word was else.",secretWord)
-            break
+            anotherGame = input("Do you want to play another game? Press Y for yes and N for No: ")
+
+            if (anotherGame == "Y" or anotherGame=="y"):
+                winCount = 0
+                secretWord = chooseWord(wordlist).lower()
+                hangman(secretWord, str(winCount))
+            else:
+                break
         
         else:
             continue
 
 
+
 secretWord = chooseWord(wordlist).lower()
-hangman(secretWord)
+hangman(secretWord,0)
+

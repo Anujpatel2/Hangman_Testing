@@ -100,6 +100,7 @@ def hangman(secretWord, winCount):
     print("Welcome to the game, Hangman!")
     print("I am thinking of a word that is",len(secretWord),"letters long.")
     winCount = 0
+    points = 0
     
     global lettersGuessed
     mistakeMade=0
@@ -124,6 +125,7 @@ def hangman(secretWord, winCount):
         else:
             print("-------------")
             print("Win Count: "+ str(winCount))
+            print("Points: "+ str(points))
             print("You have",8-mistakeMade,"guesses left.")
             print("Available letters:",getAvailableLetters(lettersGuessed))
             guess=str(input("Please guess a letter: ")).lower()
@@ -134,11 +136,16 @@ def hangman(secretWord, winCount):
             elif guess in secretWord and guess not in lettersGuessed:
                 lettersGuessed.append(guess)
                 print("Good guess:",getGuessedWord(secretWord,lettersGuessed))
+                points += 5
+                print(points)
                 
             else:
                 lettersGuessed.append(guess)
                 mistakeMade += 1
                 print("Oops! That letter is not in my word:",getGuessedWord(secretWord,lettersGuessed))
+                if points >= 2:
+                    points -= 2
+                    print(points)
                 
         if 8 - mistakeMade == 0:
             print("-------------")

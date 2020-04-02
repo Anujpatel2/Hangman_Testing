@@ -83,7 +83,20 @@ def getAvailableLetters(lettersGuessed):
         ans.remove(i)
     return ''.join(ans)
 
-def hangman(secretWord, winCount):
+def getHint(secretWord):
+    """
+    SecretWord: String, the word the user is guessing
+    lettersGuessed: String, the letters the user has guessed so far
+    Returns: string, comprised of one letter from the word the user is guessing
+    """
+
+    randomLetter = random.choice(secretWord)
+    if randomLetter in lettersGuessed:
+        getHint(secretWord, lettersGuessed)
+    else:
+        return randomLetter
+
+def startHangman(secretWord, winCount):
     '''
     secretWord: string, the secret word to guess.
     Starts up an interactive game of Hangman.
@@ -100,7 +113,7 @@ def hangman(secretWord, winCount):
     print("Welcome to the game, Hangman!")
     print("I am thinking of a word that is",len(secretWord),"letters long.")
     winCount = 0
-    points = 0
+
     
     global lettersGuessed
     mistakeMade=0
@@ -116,36 +129,38 @@ def hangman(secretWord, winCount):
             if(anotherGame=="Y" or anotherGame=="y"):
                 winCount=winCount+1
                 secretWord = chooseWord(wordlist).lower()
-                hangman(secretWord,winCount)
+                startHangman(secretWord, winCount)
             else:
                 break
 
 
             
         else:
+            points = 0
             print("-------------")
-            print("Win Count: "+ str(winCount))
-            print("Points: "+ str(points))
-            print("You have",8-mistakeMade,"guesses left.")
-            print("Available letters:",getAvailableLetters(lettersGuessed))
-            guess=str(input("Please guess a letter: ")).lower()
-            
-            if guess in lettersGuessed:
-                print("Oops! You've already guessed that letter:",getGuessedWord(secretWord,lettersGuessed))
-                
-            elif guess in secretWord and guess not in lettersGuessed:
-                lettersGuessed.append(guess)
-                print("Good guess:",getGuessedWord(secretWord,lettersGuessed))
-                points += 5
-                print(points)
-                
-            else:
-                lettersGuessed.append(guess)
-                mistakeMade += 1
-                print("Oops! That letter is not in my word:",getGuessedWord(secretWord,lettersGuessed))
-                if points >= 2:
-                    points -= 2
-                    print(points)
+            print("Win Count: " + str(winCount))
+            print("You have", 8 - mistakeMade, "guesses left.")
+            print("Available letters:", getAvailableLetters(lettersGuessed))
+
+            print("-------------")
+            print("Press 1 to Guess, Press 2 to get Hint (will cost 10 points)")
+
+            play = int(input())
+
+            if play == 1:
+                continueHangman(secretWord, points, mistakeMade, winCount)
+
+            elif play == 2:
+
+                if points >= 10:
+                    print("Here's a hint, remember it will cost you 10 points!")
+                    print(getHint(secretWord))
+                    points -= 10
+
+                else:
+                    print("sorry you do not have enough points!")
+                    continueHangman(secretWord, points, mistakeMade, winCount)
+
                 
         if 8 - mistakeMade == 0:
             print("-------------")
@@ -155,15 +170,40 @@ def hangman(secretWord, winCount):
             if (anotherGame == "Y" or anotherGame=="y"):
                 winCount = 0
                 secretWord = chooseWord(wordlist).lower()
-                hangman(secretWord, str(winCount))
+                startHangman(secretWord, str(winCount))
+
             else:
                 break
         
         else:
             continue
 
+def continueHangman (secretWord, points, mistakeMade, winCount):
+
+    guess = str(input("Please guess a letter: ")).lower()
+
+    if guess in lettersGuessed:
+        print("Oops! You've already guessed that letter:", getGuessedWord(secretWord, lettersGuessed))
+
+    elif guess in secretWord and guess not in lettersGuessed:
+        lettersGuessed.append(guess)
+        print("Good guess:", getGuessedWord(secretWord, lettersGuessed))
+        points += 5
+        print(points)
+
+
+    else:
+        lettersGuessed.append(guess)
+        mistakeMade += 1
+        print("Oops! That letter is not in my word:", getGuessedWord(secretWord, lettersGuessed))
+        if points >= 2:
+            points -= 2
+            print(points)
+
+    return points
+
 
 
 secretWord = chooseWord(wordlist).lower()
-hangman(secretWord,0)
+startHangman(secretWord,0)
 

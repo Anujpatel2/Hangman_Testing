@@ -120,7 +120,6 @@ def hangman(secretWord, winCount):
     lettersGuessed=[]
     
     while 8 - mistakeMade > 0:
-        
         if isWordGuessed(secretWord, lettersGuessed):
             print("-------------")
             print("Congratulations, you won!")

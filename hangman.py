@@ -41,8 +41,8 @@ def isWordGuessed(secretWord, lettersGuessed):
       False otherwise
     '''
     c=0
-    for i in lettersGuessed:
-        if i in secretWord:
+    for i in secretWord:
+        if i in lettersGuessed:
             c+=1
     if c==len(secretWord):
         return True
@@ -136,6 +136,8 @@ def hangman(secretWord, winCount):
             
         else:
             print("-------------")
+            print(secretWord)
+            print(str(lettersGuessed))
             print("Win Count: "+ str(winCount))
             print("Points: "+ str(points))
             print("You have",8-mistakeMade,"guesses left.")

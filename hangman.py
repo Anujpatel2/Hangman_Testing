@@ -83,18 +83,15 @@ def getAvailableLetters(lettersGuessed):
         ans.remove(i)
     return ''.join(ans)
 
-def getHint(secretWord):
-    """
-    SecretWord: String, the word the user is guessing
-    lettersGuessed: String, the letters the user has guessed so far
-    Returns: string, comprised of one letter from the word the user is guessing
-    """
 
-    randomLetter = random.choice(secretWord)
-    if randomLetter in lettersGuessed:
-        getHint(secretWord, lettersGuessed)
-    else:
-        return randomLetter
+def pointGain(points):
+    points += 5
+    return points
+
+def pointLoss(points):
+    points -= 2
+    return points
+
 
 def hangman(secretWord, winCount):
     '''
@@ -150,7 +147,8 @@ def hangman(secretWord, winCount):
             elif guess in secretWord and guess not in lettersGuessed:
                 lettersGuessed.append(guess)
                 print("Good guess:",getGuessedWord(secretWord,lettersGuessed))
-                points += 5
+                a = pointGain(points)
+                points = a
                 print(points)
                 
             else:
@@ -158,7 +156,8 @@ def hangman(secretWord, winCount):
                 mistakeMade += 1
                 print("Oops! That letter is not in my word:",getGuessedWord(secretWord,lettersGuessed))
                 if points >= 2:
-                    points -= 2
+                    a = pointLoss(points)
+                    points = a
                     print(points)
                 
         if 8 - mistakeMade == 0:

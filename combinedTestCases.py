@@ -35,6 +35,16 @@ class MyTestCase(unittest.TestCase):
         actual = hangman.isWordGuessed("boss", ['b','o','t'])
         self.assertFalse(actual, "The word you guessed is not correct")
 
+    def test_pointGain(self):
+        actual = hangman.pointGain(0)
+        expected = 5
+        self.assertEqual(expected, actual)
+
+    def test_pointLoss(self):
+        actual = hangman.pointLoss(5)
+        expected = 3
+        self.assertEqual(expected, actual)
+
 
 if __name__ == '__main__':
     unittest.main()

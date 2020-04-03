@@ -133,7 +133,6 @@ def hangman(secretWord, winCount):
             
         else:
             print("-------------")
-            print(secretWord)
             print(str(lettersGuessed))
             print("Win Count: "+ str(winCount))
             print("Points: "+ str(points))

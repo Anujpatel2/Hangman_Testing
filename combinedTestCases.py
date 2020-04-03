@@ -3,8 +3,6 @@ from unittest import TestCase
 import hangman
 
 class MyTestCase(unittest.TestCase):
-    def test_something(self):
-        self.assertEqual(True, False)
 
     def test_getAvailableLetters(self):
         actual = hangman.getAvailableLetters("abcd")
@@ -34,8 +32,9 @@ class MyTestCase(unittest.TestCase):
         self.assertTrue(actual, "The word you guessed it correct")
 
     def test_isWordGuessed2(self):
-        actual = hangman.isWordGuessed("boss", "boot")
+        actual = hangman.isWordGuessed("boss", ['b','o','t'])
         self.assertFalse(actual, "The word you guessed is not correct")
+
 
 if __name__ == '__main__':
     unittest.main()
